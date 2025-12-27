@@ -1,10 +1,15 @@
 import { useState } from 'react'
 
 //fazer desestruturaçao, usar menos props e usar mais as variaveis
-const Cracha = ({nome, cargo, cor}) => {
+const Cracha = ({nome, cargo, cor, idade, cidade}) => {
 
   const [estaConectado, setEstaConectado] = useState(false)
   const [numeroLikes, setNumeroLikes] = useState(0)
+  const [mostrarDetalhes, setMostrarDetalhes] = useState(false)
+
+  function vermais(){
+    setMostrarDetalhes(!mostrarDetalhes)
+  }
 
   function contadorLike(){
     setNumeroLikes(numeroLikes + 1)
@@ -18,6 +23,15 @@ const Cracha = ({nome, cargo, cor}) => {
     <div>
       <h2>{nome}</h2>
       <p>{cargo}</p>
+      <button onClick={vermais}>{mostrarDetalhes ? "Ver menos" : "Ver mais"}</button>
+      {mostrarDetalhes && (
+        <div className="detalhes">
+          <p>idade: {idade}</p>
+          <p>Cidade: {cidade}</p>
+        </div>
+      )
+
+      }
       <button onClick={contadorLike}>❤️ {numeroLikes}</button>
       <button onClick={handleConexao} style={{backgroundColor: cor}} >{estaConectado ? "Conectado" : "Conectar"}</button>
     </div>
