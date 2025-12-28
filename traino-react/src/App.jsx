@@ -1,5 +1,5 @@
 import  Cracha  from "./Component/Cracha"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function App() {
 
@@ -14,6 +14,14 @@ function App() {
     {id: 2, nome: "Giselly", cargo: "Desing", cor: "pink", idade: "24", cidade: "Ocara"},
     {id: 3, nome: "Joao", cargo: "Desenvolvedor Back end", cor: "blue", idade: "30", cidade: "Fortaleza"}
   ])
+
+  useEffect(() => {
+    alert("Bem vindo ao sistema de cracha")
+  }, [])
+
+  useEffect(() => {
+    document.title = `total: ${usuarios.length}`
+  }, [usuarios])
 
   const formValido = nomeInput && cargoInput
 
