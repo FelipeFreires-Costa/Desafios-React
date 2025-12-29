@@ -30,6 +30,8 @@ function App() {
     setUsuarios(usuarios.filter(user => user.id !== id))
   }
 
+
+
   function handleCadastro(){
 
     if(nomeInput === "" || cargoInput === ""){
@@ -85,10 +87,9 @@ function App() {
 
       <button onClick={handleCadastro} disabled={!formValido}> Cadastrar</button>
       </div>
-
       <h1>Usuarios</h1>
       {usuarios.map((item) =>(
-          <Cracha key={item.id} nome={item.nome} cargo={item.cargo} cor={item.cor} cidade={item.cidade} idade={item.idade} aoDeletar={() => deletarUsuario(item.id)}/>
+          <Cracha key={item.id} nome={item.nome} cargo={item.cargo} cor={item.cor} cidade={item.cidade} idade={item.idade} aoDeletar={() => deletarUsuario(item.id) }/>
       ) )}
     </div>
   )
