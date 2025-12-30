@@ -1,10 +1,14 @@
 import React from 'react'
 
-function Tarefa({texto, concluido, aoClicar}) {
+function Tarefa({texto, concluido, aoClicar, aoRemover}) {
   return(
     <div>
-      <li style={{textDecoration: concluido ? "line-through" : "none", color: concluido ? "gray" : "black"}} onClick={aoClicar}>
+
+      <li>
+        <span onClick={aoClicar} style={{textDecoration: concluido ? "line-through" : "none", color: concluido ? "gray" : "black"}}>
         {texto}
+        </span>
+        <button onClick={aoRemover}>❌</button>
       </li>
     </div>
   )
