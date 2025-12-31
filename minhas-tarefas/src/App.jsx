@@ -46,6 +46,8 @@ function App() {
   }
 
   function removerTarefa(id){
+    const confirmacao = confirm("tem certeza que deseja excluir?")
+    if(!confirmacao) return
     setListaTarefas(listaTarefas.filter((tarefa) => tarefa.id !== id))
   }
 
