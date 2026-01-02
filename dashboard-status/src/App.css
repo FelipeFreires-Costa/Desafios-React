@@ -9,10 +9,23 @@
   border-left-color: green;
 }
 
+
 .offline {
   border-left-color: red;
 }
 
 .alerta {
   border-left-color: orange;
+}
+
+.online span{
+  background-color: green;
+}
+
+.offline span{
+  background-color: red;
+}
+
+.alerta span{
+  background-color: orange;
 }

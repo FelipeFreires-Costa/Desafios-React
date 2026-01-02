@@ -7,7 +7,7 @@ function CardServidor({nome, ip, status}){
     <div className={`card ${status}`}>
       <h2>{nome}</h2>
       <p>{ip}</p>
-      <p>status: {status}</p>
+      <span>{status}</span>
     </div>
   )
 
