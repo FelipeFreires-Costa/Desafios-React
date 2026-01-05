@@ -24,6 +24,18 @@ function App() {
     setCarrinho([...carrinho, novoProduto])
   }
 
+  function removerDoCarrinho(id){
+    const novaLista = (carrinho.filter((produto) => produto.id !== id))
+
+    setCarrinho(novaLista)
+  }
+  
+
+  const precoTotal = carrinho.reduce((acc, produto) => {
+    return acc + produto.preco
+  }, 0)
+
+
   return (
     <div>
       {
@@ -31,11 +43,13 @@ function App() {
           <CardProdutos key={item.id} nome={item.nome} preco={item.preco} imagem={item.imagem} aoClicar={() => adicionarAoCarrinho(item)}/>
         ))
       }
+      <h2>Carrinho:</h2>
       {
         carrinho.map((item) => (
-          <Carrinho key={item.id} nome={item.nome} preco={item.preco} imagem={item.imagem}/>
+          <Carrinho key={item.id} nome={item.nome} preco={item.preco} imagem={item.imagem} aoDeletar={() => removerDoCarrinho(item.id)}/>
         ))
       }
+      <p>total: R$ {precoTotal}</p>
     </div>
   )
 }
