@@ -6,22 +6,44 @@ import Carrinho from './components/Carrinho';
 function App() {
 
   const [produtosIniciais, setProdutosIniciais] = useState([
-  { id: 1, nome: "Tênis Nike Air", preco: 500, imagem: "👟" },
-  { id: 2, nome: "Tênis Adidas Run", preco: 300, imagem: "🏃‍♂️" },
-  { id: 3, nome: "Tênis Puma Casual", preco: 200, imagem: "👞" },
+  { id: 1, nome: "Tênis Nike Air", preco: 500, imagem: "👟", estoque: 5 },
+  { id: 2, nome: "Tênis Adidas Run", preco: 300, imagem: "🏃‍♂️", estoque: 2 },
+  { id: 3, nome: "Tênis Puma Casual", preco: 200, imagem: "👞", estoque: 3 },
 ]);
 
   const [carrinho, setCarrinho] = useState([])
 
-  function adicionarAoCarrinho(produto){
-    const novoProduto ={
-      id: Math.random(),
-      nome: produto.nome,
-      preco: produto.preco,
-      imagem: produto.imagem
-    }
+  function adicionarAoCarrinho(produtoOriginal){
+    const itemExistente = carrinho.find((item) => item.id === produtoOriginal.id)
 
-    setCarrinho([...carrinho, novoProduto])
+    if(itemExistente){
+
+      if(itemExistente && itemExistente.quantidade >= produtoOriginal.estoque){
+        alert("estoque esgotou")
+        return
+      }
+
+      const novaLista = carrinho.map((item) => {
+        if(item.id === produtoOriginal.id){
+          return { ...item, quantidade: item.quantidade + 1}
+        }
+
+        return item
+      })
+
+
+
+      setCarrinho(novaLista)
+
+    } else {
+      //cenario B: o produto nao existe
+
+      const novoItem = {
+        ...produtoOriginal,
+        quantidade: 1
+      }
+      setCarrinho([...carrinho, novoItem])
+    }
   }
 
   function removerDoCarrinho(id){
@@ -32,21 +54,27 @@ function App() {
   
 
   const precoTotal = carrinho.reduce((acc, produto) => {
-    return acc + produto.preco
+    return acc + produto.preco * produto.quantidade
   }, 0)
 
 
   return (
     <div>
       {
-        produtosIniciais.map((item) => (
-          <CardProdutos key={item.id} nome={item.nome} preco={item.preco} imagem={item.imagem} aoClicar={() => adicionarAoCarrinho(item)}/>
-        ))
+        produtosIniciais.map((produto) => {
+          const itemNoCarrinho = carrinho.find(item => item.id === produto.id)
+
+          const estoqueAcabou = itemNoCarrinho && itemNoCarrinho.quantidade >= produto.estoque
+
+          return (
+            <CardProdutos key={produto.id} desabilitado={estoqueAcabou} nome={produto.nome} preco={produto.preco} imagem={produto.imagem} estoque={produto.estoque} aoClicar={() => adicionarAoCarrinho(produto)}/>
+          )
+        })
       }
       <h2>Carrinho:</h2>
       {
         carrinho.map((item) => (
-          <Carrinho key={item.id} nome={item.nome} preco={item.preco} imagem={item.imagem} aoDeletar={() => removerDoCarrinho(item.id)}/>
+          <Carrinho key={item.id} nome={item.nome} preco={item.preco} imagem={item.imagem} quantidade={item.quantidade} aoDeletar={() => removerDoCarrinho(item.id)}/>
         ))
       }
       <p>total: R$ {precoTotal}</p>
