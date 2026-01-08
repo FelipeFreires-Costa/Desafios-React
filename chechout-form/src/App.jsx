@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Formulario from './components/Formulario'
+import "../src/App.css"
 
 function App() {
   const [form, setForm] = useState({
@@ -47,6 +48,15 @@ function App() {
         value={form.email}
         aoMudar={handleChange}
         />
+
+        {
+          !emailIsValid && form.email.length > 0 && (
+            <span className='erro'>
+              seu e-mail precisa incluir "@" e "."
+            </span>
+          )
+        }
+
         <Formulario
         label="Senha: "
         name="senha"
@@ -55,6 +65,14 @@ function App() {
         aoMudar={handleChange}
         />
 
+        {
+          !senhaIsValid && form.senha.length > 0 && (
+            <span className='erro'>
+            Sua senha precisa conter pelomenos 8 caracteres
+            </span>
+          )
+        }
+
         <Formulario
         label="Confirmar senha: "
         name="confirmarSenha"
@@ -62,6 +80,13 @@ function App() {
         value={form.confirmarSenha}
         aoMudar={handleChange}
         />
+        {
+          !confirmarSenhaIsValid && form.confirmarSenha.length > 0 &&(
+            <span className='erro'>
+              As senhas nao conferem 
+            </span>
+          )
+        }
       </form>
       <button disabled={!formIsValid}>Enviar</button>
     </div>
