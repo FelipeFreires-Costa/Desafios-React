@@ -10,6 +10,21 @@ function App() {
     confirmarSenha: ""
   })
 
+  const [IsEnviando, setIsEnviando] = useState(false)
+
+  function handleSubmit(event){
+    event.preventDefault()
+      setIsEnviando(prevIsEnviando => !prevIsEnviando)
+    setTimeout(() => {
+      setIsEnviando(false)
+      setForm({nome: "",
+        email: "",
+        senha: "",
+        confirmarSenha: ""})
+      alert("enviado com sucesso")
+    }, 2000)
+  }
+
   function handleChange(event){
     const {name, value} = event.target
 
@@ -33,7 +48,7 @@ function App() {
 
     <div>
       <h1>tela de login</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Formulario
         label="Nome Completo: "
         name="nome"
@@ -87,8 +102,8 @@ function App() {
             </span>
           )
         }
+        <button disabled={!formIsValid || IsEnviando}>{IsEnviando ? "Enviando..." : 'Enviar'}</button>
       </form>
-      <button disabled={!formIsValid}>Enviar</button>
     </div>
   )
 }
