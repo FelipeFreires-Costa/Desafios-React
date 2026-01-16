@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
@@ -45,6 +45,13 @@ function App() {
 
   }
   
+  useEffect(() => {
+    if (cepInput.length === 8){
+      bucarCep()
+    }
+
+  }, [cepInput])
+
   return (
     <div>
       <h1>Busca CEP</h1>
@@ -53,17 +60,14 @@ function App() {
       value={cepInput}
       onChange={(e) => setCepInput(e.target.value)}
       />
-      <button onClick={bucarCep}>Buscar</button>
 
-    { endereco.regiao.length > 0 ? (
-            <ul>
+
+      <ul>
         <li>Regiao: {endereco.regiao}</li>
         <li>Estado: {endereco.estado}</li>
         <li>Cidade: {endereco.cidade}</li>
       </ul>
-    ) : (
-      <p>Digite um CEP para buscar</p>
-    )}
+
 
       
     </div>
