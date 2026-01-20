@@ -1,12 +1,14 @@
-import React from 'react'
+import React from "react";
 
-function CardProdutos({nome, preco}){
+function CardProdutos({ nome, preco, aoRemover }) {
   return (
     <div>
-      <p>produto: {nome}</p>
-      <p>preço: R$ {preco}</p>
+      <span>
+        <strong>{nome}</strong> - R$ {preco.toFixed(2)}
+      </span>
+      <button style={{ background: 'red', color: 'white', border: 'none', cursor: 'pointer' }} onClick={aoRemover}>Remover</button>
     </div>
-  )
+  );
 }
 
-export default CardProdutos
+export default CardProdutos;
