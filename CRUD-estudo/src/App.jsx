@@ -3,16 +3,30 @@ import "./App.css";
 import CardProdutos from "./Components/CardProdutos";
 
 function App() {
-  const [produtos, setProdutos] = useState([
+  const [produtos, setProdutos] = useState(() => {
+    //tenta buscar no navegador
+    const dadosSalvos = localStorage.getItem("meu-estoque")
+
+    if(dadosSalvos){
+      return JSON.parse(dadosSalvos)
+    }else{
+      return [
     { id: 1, nome: "notebook", preco: 2500 },
     { id: 2, nome: "Mouse", preco: 90 },
     { id: 3, nome: "Teclado", preco: 200 },
     { id: 4, nome: "Mouse pad", preco: 50 },
-  ]);
+      ]
+    }
+  });
 
   const [nomeInput, setNomeInput] = useState("");
   const [precoInput, setPrecoInput] = useState("");
   const [idEditando, setIdEditando] = useState(null);
+
+  //salvar dados no localStorage
+  useEffect(() => {
+    localStorage.setItem("meu-estoque", JSON.stringify(produtos))
+  }, [produtos])
 
   function prepararEdicao(produto) {
     setIdEditando(produto.id);
