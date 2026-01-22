@@ -108,8 +108,8 @@ function App() {
         <button onClick={salvarProduto}>
           {idEditando === null ? "Adicionar" : "Salvar alteração"}
         </button>
-      </div>
 
+      </div>
       {produtos.map((item) => (
         <CardProdutos
           key={item.id}
