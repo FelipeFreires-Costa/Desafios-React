@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CardProdutos from './Components/CardProdutos'
 
 function App() {
 
-  const [produtos, setProdutos] = useState([
-    {id: 1, nome: "Minecraft", preco: 80},
-    {id: 2, nome: "Hytale", preco: 60},
-    {id: 3, nome: "Heartopia", preco: 10}
-  ])
+  const [produtos, setProdutos] = useState(() => {
+    const dadosSalvos = localStorage.getItem("estoque-games")
+
+    if(dadosSalvos){
+      return JSON.parse(dadosSalvos)
+    }
+  })
+
+  useEffect(() => {
+    localStorage.setItem("estoque-games", JSON.stringify(produtos))
+  }, [produtos])
 
   const [nomeInput, setNomeInput] = useState("")
   const [precoInput, setPrecoInput] = useState("")
@@ -67,6 +73,7 @@ function salvarItem(){
   setPrecoInput("")
 }
 
+console.log(produtos)
 
   return (
     <div>
@@ -76,11 +83,14 @@ function salvarItem(){
         <input type="number" placeholder='Adicione um preço' value={precoInput} onChange={(e) => setPrecoInput(e.target.value)} />
         <button onClick={salvarItem}>{idEditando === null ? "adicionar" : "Salvar alteração"}</button>
       </div>
-      <h1>crud</h1>
+      <h1>Estoque:</h1>
 
       {produtos.map((item) => (
         <CardProdutos key={item.id} nome={item.nome} preco={item.preco} aoRemover={() => removerJogo(item.id)} aoEditar={() => chamarInfo(item)}/>
       ))}
+      {
+        produtos.length === 0 && <p>Nenhum item no estoque</p>
+      }
     </div>
   )
 }
