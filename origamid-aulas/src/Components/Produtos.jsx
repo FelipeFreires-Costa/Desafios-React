@@ -9,6 +9,8 @@ const Produtos = () => {
   { nome: 'Smartphone', propriedades: ['2gb ram', '128gb'] },
 ];
 
+
+
   return (
     <section>
       <Titulo texto="Produtos" />
